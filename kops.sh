@@ -16,6 +16,7 @@ export KOPS_STATE_STORE=s3://khojar-kops-testbkt143.k8s.local
 kops create cluster --name khojar.k8s.local --zones ap-south-1a --image ami-0f918f7e67a3323f0  --control-plane-count=1 --control-plane-size t2.medium --node-count=2 --node-size t2.micro
 kops update cluster --name khojar.k8s.local --yes --admin
 
-export KOPS_STATE_STORE=s3://khojar-kops-testbkt143.k8s.local
 
+
+#export KOPS_STATE_STORE=s3://khojar-kops-testbkt143.k8s.local
 #kops validate cluster --wait 10m
