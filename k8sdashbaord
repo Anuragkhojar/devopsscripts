@@ -1,0 +1,47 @@
+Step 1:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+Step 2:
+kubectl -n kubernetes-dashboard edit service kubernetes-dashboard
+
+
+spec:
+  type: ClusterIP   change to -->   type: LoadBalancer
+
+save it 
+
+
+kubectl -n kubernetes-dashboard get svc kubernetes-dashboard
+
+now take a loadbalancer url and aceess to browser
+
+
+Step 3.
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+EOF
+
+
+//run this command one shot then next command and copy the token 
+
+kubectl -n kubernetes-dashboard create token admin-user
+
+
+
